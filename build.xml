@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE project [
+]>
+
+<project name="NRMA-EmailReport" default="usage" basedir=".">
+
+	<property environment="appenv" />
+	<property name="project.home" value="${basedir}" />
+	
+	<target name="initialization">
+		<tstamp>
+			<format property="Init.time" pattern="MM/dd/yyyy hh:mm aa" />
+		</tstamp>
+		<condition property="ANT" value="${appenv.ANT_HOME}/bin/ant.bat" else="${appenv.ANT_HOME}/bin/ant">
+			<os family="windows" />
+		</condition>
+	</target>
+	
+	<target name="usage" depends='initialization'>
+			<echo>
+				ant run will execute the test @ ${Init.time}
+			</echo>
+	      
+		</target>
+
+	<target name="sendMail" depends="initialization">
+		   <delete dir="${project.home}/Extent_Reports" />
+		   <mkdir dir="${project.home}/Extent_Reports/Reports/test-output/AutomationReports" />
+		   <copy file="${project.home}/AutomationTestReport.html" todir="${project.home}/Extent_Reports/Reports" overwrite="true"/>
+		   <copy todir="${project.home}/Extent_Reports/Reports/test-output/AutomationReports" overwrite="true">
+		    <fileset dir="${project.home}/test-output/AutomationReports"/>
+		   </copy>
+		   <zip destfile="${project.home}/Extent_Reports/Reports.zip" basedir="${project.home}/Extent_Reports/Reports"/>
+	        <mail
+	             tolist="jyotichaudhury@gmail.com"
+	        	 cclist="jyoti.chaudhury@capgemini.com,devendra.kudle@capgemini.com"
+	             from="APAC-TestAutomationTeam"
+	             subject="NRMA Test Automation Report"
+	             mailhost="smtp.gmail.com"
+	             mailport= "587"
+	             enableStartTLS="true"
+	             user="XXXXXX@gmail.com"
+	             password="XXXXXXXXXXXXX"
+	             messagemimetype="text/html">
+	                <message> <![CDATA[
+	                          <font face="verdana" color="SlateGrey" size="2">Hello All,<br> 
+			
+	                           <br>Please find attached the status report of NRMA Test Automation.<br> 
+			
+	                           <br>Kindly note that this is an auto generated email. <br> 
+		
+	                           <br>Defect Ids for failed test cases (if any) will be shared in a separate email. <br> 
+			
+	                           <br>Regards,
+	            
+	     	                   <br>Jyoti Chaudhury</font>
+	                ]]></message>
+	                 <attachments>
+                            <fileset dir="${project.home}/src/test/java/com/mynrma/dataEngine">
+			                       <include name="DataEngine.xls"/>
+		                    </fileset>
+                            <fileset dir="${project.home}/Extent_Reports">
+			                       <include name="**/*.zip"/>
+		                    </fileset>
+	                </attachments>
+	        </mail>
+	    	
+	 </target>
+	 
+</project>

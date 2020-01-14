@@ -1,0 +1,20 @@
+#Login Page ObjectS
+Login_User_Name=//input[@id='username']
+Login_Password=//input[@id='password']
+Login_Button=//input[@type='submit' and @value='Login']
+
+#Landing Page Objects
+Contact_Screen=//span[@class='siebui-icon-contacts_icon siebui-icon-screentab_icon']/ancestor::a
+
+#Contacts Screen Objects
+All_Cons_Acros_Org=//a[@class='siebui-ctrl-drilldown siebui-anchor-readonly' and @name='Name' and @rowid='1']
+
+#All Contacts Across Organisation View Objects
+New_Button=//button[@aria-label='Contacts:New']
+First_Name=//input[@aria-label='First Name']
+Last_Name=//input[@aria-label='Last Name']
+DOB=//input[@aria-label='Date of Birth']
+Gender=//input[@aria-label='Gender']
+Mobile_Num=//input[@aria-label='Mobile 1**']
+Email_Address=//input[@aria-label='Email 1**']
+Address_MVG=//input[@aria-label='Street Address']/following-sibling::span
